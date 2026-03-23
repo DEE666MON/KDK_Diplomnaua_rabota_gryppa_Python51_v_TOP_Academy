@@ -1,13 +1,11 @@
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
-from pathlib import Path
-import sqlite3
 import threading
 import queue
 import os
 import sys
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime
 import time
 import pystray
 import ctypes
