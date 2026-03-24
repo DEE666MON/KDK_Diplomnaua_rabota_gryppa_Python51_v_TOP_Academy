@@ -1,17 +1,34 @@
 import logging
+from logging.handlers import RotatingFileHandler
+import sys
 
 def setup_logging():
-    # Настройка логирования
-    logging.basicConfig(
-        filename='time_tracker.log',
-        level=logging.INFO,
-        format='%(asctime)s - %(levelname)s - %(message)s'
+    # Настройка логирования с поддержкой UTF-8
+    handler = RotatingFileHandler(
+        'time_tracker.log',
+        maxBytes=5 * 1024 * 1024,  # 5 МБ
+        backupCount=3,
+        encoding='utf-8'
     )
+    formatter = logging.Formatter(
+        '%(asctime)s - %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+    handler.setFormatter(formatter)
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    logger.handlers.clear()
+    logger.addHandler(handler)
+    console_handler = logging.StreamHandler(sys.stdout)
+    console_handler.setFormatter(formatter)
+    console_handler.setLevel(logging.INFO)
+    logger.addHandler(console_handler)
+
 
 def log_error(error):
     # Логирование ошибок
     logging.error(str(error))
-    print(error)
+    print(f"Ошибка: {error}")
 
 def clean_for_csv(text):
     # Очищает текст от символов, которые могут нарушить CSV

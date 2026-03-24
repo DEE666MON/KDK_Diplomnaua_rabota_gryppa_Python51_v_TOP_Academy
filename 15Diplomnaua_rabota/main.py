@@ -3,6 +3,7 @@ from tkinter import ttk, messagebox, filedialog
 import threading
 import queue
 import os
+import io
 import sys
 import logging
 from datetime import datetime
@@ -14,6 +15,10 @@ import pygetwindow as gw
 import csv
 import Backend_logic.bel as be
 import Database_logic.dbl as db
+
+if sys.platform == 'win32':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 class TimeTrackerApp:
     def __init__(self):
